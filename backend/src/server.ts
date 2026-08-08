@@ -2,14 +2,31 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import bcrypt from "bcryptjs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 import { database } from "./config/database.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const port = Number(process.env.PORT ?? 3000);
 
 app.use(cors());
 app.use(express.json());
+
+// ==========================================
+// SERVIR ARCHIVOS ESTÁTICOS (FRONTEND)
+// ==========================================
+const frontendPath = path.join(__dirname, '../../');
+app.use(express.static(frontendPath));
+
+// ==========================================
+// RUTA RAÍZ - SERVIR INDEX.HTML
+// ==========================================
+app.get('/', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'index.html'));
+});
 
 // ==========================================
 // FUNCIÓN PARA OBTENER FILAS DE LA BD

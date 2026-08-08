@@ -3,6 +3,10 @@ import "dotenv/config";
 
 const connectionString = process.env.DB_CONNECTION_STRING;
 
+console.log("DEBUG: DB_CONNECTION_STRING exists:", !!connectionString);
+console.log("DEBUG: DB_USER:", process.env.DB_USER);
+console.log("DEBUG: Using connection method:", connectionString ? "connection string" : "individual params");
+
 const poolConfig = connectionString
   ? connectionString
   : {
